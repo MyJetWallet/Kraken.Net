@@ -29,7 +29,7 @@ jobs:
       run: dotnet pack --configuration Release Kraken.Net /p:Version=${GITHUB_REF#refs/tags/client-}
 
     - name: Publish the package to GPR
-      run: dotnet nuget push sKraken.Net/bin/Release/*.nupkg -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_TOCKEN }}
+      run: dotnet nuget push Kraken.Net/bin/Release/*.nupkg -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_TOCKEN }}
 
     - name: Publish the package to GitHub
       uses: MyJetWallet/nuget-publish-to-github-packages-action@v2.1
