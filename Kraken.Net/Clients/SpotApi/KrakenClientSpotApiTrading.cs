@@ -165,7 +165,6 @@ namespace Kraken.Net.Clients.SpotApi
             parameters.AddOptionalParameter("timeinforce", timeInForce?.ToString());
             parameters.AddOptionalParameter("reduce_only", reduceOnly);
             parameters.AddOptionalParameter("stptype", EnumConverter.GetString(selfTradePreventionType));
-            parameters.AddOptionalParameter("timeinforce", timeInForce?.ToString());
             if (validateOnly == true)
                 parameters.AddOptionalParameter("validate", true);
             var result = await _baseClient.Execute<KrakenPlacedOrder>(_baseClient.GetUri("0/private/AddOrder"), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
