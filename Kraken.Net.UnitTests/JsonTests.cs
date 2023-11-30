@@ -1,6 +1,8 @@
 ﻿using Kraken.Net.Interfaces;
 using Kraken.Net.UnitTests.TestImplementations;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CryptoExchange.Net.Interfaces;

@@ -3,6 +3,8 @@ using Kraken.Net.UnitTests.TestImplementations;
 using Kucoin.Net.UnitTests.TestImplementations;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+
 using System.Threading.Tasks;
 
 namespace Kraken.Net.UnitTests
@@ -26,7 +28,7 @@ namespace Kraken.Net.UnitTests
             var subResult = subTask.Result;
 
             // assert
-            Assert.IsTrue(subResult.Success);
+            ClassicAssert.IsTrue(subResult.Success);
         }
 
         [Test]
@@ -45,8 +47,8 @@ namespace Kraken.Net.UnitTests
             var subResult = subTask.Result;
 
             // assert
-            Assert.IsFalse(subResult.Success);
-            Assert.IsTrue(subResult.Error!.Message.Contains("Failed to sub"));
+            ClassicAssert.IsFalse(subResult.Success);
+            ClassicAssert.IsTrue(subResult.Error!.Message.Contains("Failed to sub"));
         }
     }
 }

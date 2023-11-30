@@ -2,6 +2,8 @@ using System.Linq;
 using Kraken.Net.Converters;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+
 
 namespace Kraken.Net.UnitTests.ConvertersTests.StreamOrderbookConvertersTests
 {
@@ -53,14 +55,14 @@ namespace Kraken.Net.UnitTests.ConvertersTests.StreamOrderbookConvertersTests
         {
             var testObj = StreamOrderBookConverter.Convert(this.fiveElements!);
 
-            Assert.AreEqual(2, testObj!.Data.Asks.Count());
-            Assert.AreEqual(1, testObj.Data.Bids.Count());
-            Assert.AreEqual(1234, testObj.ChannelId);
-            Assert.AreEqual("book-10", testObj.Topic);
-            Assert.AreEqual("XBT/USD", testObj.Symbol);
+            ClassicAssert.AreEqual(2, testObj!.Data.Asks.Count());
+            ClassicAssert.AreEqual(1, testObj.Data.Bids.Count());
+            ClassicAssert.AreEqual(1234, testObj.ChannelId);
+            ClassicAssert.AreEqual("book-10", testObj.Topic);
+            ClassicAssert.AreEqual("XBT/USD", testObj.Symbol);
 
-            Assert.AreEqual("0.40100000", testObj.Data.Asks.ElementAt(1).RawQuantity);
-            Assert.AreEqual("5542.50000", testObj.Data.Asks.ElementAt(1).RawPrice);
+            ClassicAssert.AreEqual("0.40100000", testObj.Data.Asks.ElementAt(1).RawQuantity);
+            ClassicAssert.AreEqual("5542.50000", testObj.Data.Asks.ElementAt(1).RawPrice);
         }
     }
 }

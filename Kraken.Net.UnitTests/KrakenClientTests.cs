@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+
 using System;
 using Kraken.Net.Objects;
 using Kraken.Net.UnitTests.TestImplementations;
@@ -55,8 +57,8 @@ namespace Kraken.Net.UnitTests
         //        var data = result.GetType().GetProperty("Data").GetValue(result);
 
         //        assert
-        //        Assert.AreEqual(true, callResult);
-        //        Assert.IsTrue(TestHelpers.AreEqual(expected, data), method.Name);
+        //        ClassicAssert.AreEqual(true, callResult);
+        //        ClassicAssert.IsTrue(TestHelpers.AreEqual(expected, data), method.Name);
         //    }
         //}
 
@@ -71,9 +73,9 @@ namespace Kraken.Net.UnitTests
             var result = await client.SpotApi.ExchangeData.GetSymbolsAsync();
 
             // assert
-            Assert.IsFalse(result.Success);
-            Assert.IsTrue(result.Error!.Message.Contains("first error"));
-            Assert.IsTrue(result.Error!.Message.Contains("another error"));
+            ClassicAssert.IsFalse(result.Success);
+            ClassicAssert.IsTrue(result.Error!.Message.Contains("first error"));
+            ClassicAssert.IsTrue(result.Error!.Message.Contains("another error"));
         }
 
         [TestCase()]
@@ -86,9 +88,9 @@ namespace Kraken.Net.UnitTests
             var result = await client.SpotApi.ExchangeData.GetSymbolsAsync();
 
             // assert
-            Assert.IsFalse(result.Success);
-            Assert.IsTrue(result.ResponseStatusCode == System.Net.HttpStatusCode.BadRequest);
-            Assert.IsTrue(result.Error!.ToString().Contains("Error request"));
+            ClassicAssert.IsFalse(result.Success);
+            ClassicAssert.IsTrue(result.ResponseStatusCode == System.Net.HttpStatusCode.BadRequest);
+            ClassicAssert.IsTrue(result.Error!.ToString().Contains("Error request"));
         }
 
         public string SerializeExpected<T>(T data)
@@ -116,9 +118,9 @@ namespace Kraken.Net.UnitTests
         public void CheckValidKrakenSymbol(string symbol, bool isValid)
         {
             if (isValid)
-                Assert.DoesNotThrow(() => symbol.ValidateKrakenSymbol());
+                ClassicAssert.DoesNotThrow(() => symbol.ValidateKrakenSymbol());
             else
-                Assert.Throws(typeof(ArgumentException), () => symbol.ValidateKrakenSymbol());
+                ClassicAssert.Throws(typeof(ArgumentException), () => symbol.ValidateKrakenSymbol());
         }
 
         [TestCase("BTC/USDT", true)]
@@ -134,9 +136,9 @@ namespace Kraken.Net.UnitTests
         public void CheckValidKrakenWebsocketSymbol(string symbol, bool isValid)
         {
             if (isValid)
-                Assert.DoesNotThrow(() => symbol.ValidateKrakenWebsocketSymbol());
+                ClassicAssert.DoesNotThrow(() => symbol.ValidateKrakenWebsocketSymbol());
             else
-                Assert.Throws(typeof(ArgumentException), () => symbol.ValidateKrakenWebsocketSymbol());
+                ClassicAssert.Throws(typeof(ArgumentException), () => symbol.ValidateKrakenWebsocketSymbol());
         }
 
         [Test]
@@ -153,7 +155,7 @@ namespace Kraken.Net.UnitTests
                 foreach (var method in implementation.GetMethods().Where(m => m.ReturnType.IsAssignableTo(typeof(Task))))
                 {
                     var interfaceMethod = clientInterface.GetMethod(method.Name, method.GetParameters().Select(p => p.ParameterType).ToArray());
-                    Assert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.Name}");
+                    ClassicAssert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.Name}");
                     methods++;
                 }
                 Debug.WriteLine($"{clientInterface.Name} {methods} methods validated");
@@ -173,7 +175,7 @@ namespace Kraken.Net.UnitTests
                 foreach (var method in implementation.GetMethods().Where(m => m.ReturnType.IsAssignableTo(typeof(Task<CallResult<UpdateSubscription>>))))
                 {
                     var interfaceMethod = clientInterface.GetMethod(method.Name, method.GetParameters().Select(p => p.ParameterType).ToArray());
-                    Assert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.Name}");
+                    ClassicAssert.NotNull(interfaceMethod, $"Missing interface for method {method.Name} in {implementation.Name} implementing interface {clientInterface.Name}");
                     methods++;
                 }
                 Debug.WriteLine($"{clientInterface.Name} {methods} methods validated");

@@ -11,6 +11,8 @@ using Kraken.Net.Objects.Models;
 using Kraken.Net.Objects.Models.Socket;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+
 
 namespace Kraken.Net.UnitTests
 {
