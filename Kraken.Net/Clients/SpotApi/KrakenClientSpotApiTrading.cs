@@ -85,12 +85,23 @@ namespace Kraken.Net.Clients.SpotApi
         }
 
         /// <inheritdoc />
-        public async Task<WebCallResult<KrakenUserTradesPage>> GetUserTradesAsync(DateTime? startTime = null, DateTime? endTime = null, int? resultOffset = null, string? twoFactorPassword = null, CancellationToken ct = default)
+        public async Task<WebCallResult<KrakenUserTradesPage>> GetUserTradesAsync(DateTime? startTime = null, DateTime? endTime = null, string startId = null, string endId = null, int? resultOffset = null, string? twoFactorPassword = null, CancellationToken ct = default)
         {
             var parameters = new Dictionary<string, object>();
             parameters.AddOptionalParameter("trades", true);
-            parameters.AddOptionalParameter("start", DateTimeConverter.ConvertToSeconds(startTime));
-            parameters.AddOptionalParameter("end", DateTimeConverter.ConvertToSeconds(endTime));
+            
+            if (string.IsNullOrWhiteSpace(startId))
+            {
+                parameters.Remove("start");
+                parameters.AddOptionalParameter("start", DateTimeConverter.ConvertToSeconds(startTime));
+            }
+                
+            if (string.IsNullOrWhiteSpace(endId))
+            {
+                parameters.Remove("end");
+                parameters.AddOptionalParameter("end", DateTimeConverter.ConvertToSeconds(endTime));
+            }
+            
             parameters.AddOptionalParameter("ofs", resultOffset);
             parameters.AddOptionalParameter("otp", twoFactorPassword ?? _baseClient.ClientOptions.StaticTwoFactorAuthenticationPassword);
             var result = await _baseClient.Execute<KrakenUserTradesPage>(_baseClient.GetUri("0/private/TradesHistory"), HttpMethod.Post, ct, parameters, true, weight: 2).ConfigureAwait(false);
